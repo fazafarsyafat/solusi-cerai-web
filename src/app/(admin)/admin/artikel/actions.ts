@@ -94,8 +94,9 @@ export async function updateArticle(id: number, prevState: any, formData: FormDa
         excerpt: content.replace(/<[^>]*>?/gm, '').substring(0, 150) + "...",
       }
     });
-  } catch (error) {
-    return { error: "Gagal memperbarui artikel." };
+  } catch (error: any) {
+    console.error("Update article error:", error);
+    return { error: `Gagal memperbarui artikel: ${error.message}` };
   }
 
   revalidatePath('/admin/artikel');

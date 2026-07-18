@@ -118,8 +118,9 @@ export async function updateLawyer(id: number, prevState: any, formData: FormDat
         status: status || "active",
       }
     });
-  } catch (error) {
-    return { error: "Gagal memperbarui data advokat." };
+  } catch (error: any) {
+    console.error("Update lawyer error:", error);
+    return { error: `Gagal memperbarui advokat: ${error.message}` };
   }
 
   revalidatePath('/admin/advokat');
