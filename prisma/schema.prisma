@@ -1,0 +1,98 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  engineType = "library"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  articles  Article[]
+}
+
+model Lawyer {
+  id             Int      @id @default(autoincrement())
+  name           String
+  slug           String   @unique
+  photo          String?
+  degree         String?
+  bio            String
+  education      String?
+  experience     String?
+  specialization String?  // Store as comma separated
+  city           String?
+  email          String?
+  phone          String?
+  social_instagram String?
+  social_linkedin  String?
+  social_twitter   String?
+  peradi_number    String?
+  status         String   @default("active") // active, inactive
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model ArticleCategory {
+  id          Int       @id @default(autoincrement())
+  name        String
+  slug        String    @unique
+  description String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  articles    Article[]
+}
+
+model Article {
+  id              Int      @id @default(autoincrement())
+  title           String
+  slug            String   @unique
+  thumbnail       String?
+  excerpt         String?
+  content         String
+  category_id     Int
+  category        ArticleCategory @relation(fields: [category_id], references: [id], onDelete: Cascade)
+  author_id       Int
+  author          User     @relation(fields: [author_id], references: [id], onDelete: Cascade)
+  tags            String?  // comma separated
+  seo_title       String?
+  seo_description String?
+  meta_keywords   String?
+  status          String   @default("draft") // draft, published
+  reading_time    Int      @default(5)
+  published_at    DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Service {
+  id          Int      @id @default(autoincrement())
+  name        String
+  slug        String   @unique
+  icon        String   @default("scale")
+  thumbnail   String?
+  description String
+  content     String
+  status      String   @default("active") // active, inactive
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model SiteSetting {
+  id        Int      @id @default(autoincrement())
+  key       String   @unique
+  value     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

@@ -1,0 +1,31 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@theme {
+  --color-primary: #2563EB; /* Blue: Trust, Security, Professionalism */
+  --color-primary-dark: #1D4ED8;
+  --color-secondary: #10B981; /* Green: Calm, Hope, Healing */
+  --color-background: #ffffff;
+  --color-foreground: #0f172a;
+}
+
+@layer base {
+  body {
+    @apply bg-white text-slate-900;
+  }
+}
+
+@layer utilities {
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
