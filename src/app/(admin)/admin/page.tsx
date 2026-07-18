@@ -2,6 +2,8 @@ import { prisma } from "@/lib/prisma";
 import { FileText, Users } from "lucide-react";
 import Link from "next/link";
 
+export const dynamic = 'force-dynamic';
+
 export default async function AdminDashboard() {
   const articleCount = await prisma.article.count();
   const lawyerCount = await prisma.lawyer.count();

@@ -51,6 +51,7 @@ export async function createArticle(prevState: any, formData: FormData) {
     return { error: "Gagal menyimpan artikel." };
   }
 
+  revalidatePath('/admin', 'layout');
   revalidatePath('/admin/artikel');
   revalidatePath('/artikel');
   return { success: true };
@@ -99,6 +100,7 @@ export async function updateArticle(id: number, prevState: any, formData: FormDa
     return { error: `Gagal memperbarui artikel: ${error.message}` };
   }
 
+  revalidatePath('/admin', 'layout');
   revalidatePath('/admin/artikel');
   revalidatePath('/artikel');
   return { success: true };
@@ -114,6 +116,7 @@ export async function deleteArticle(id: number) {
     await prisma.article.delete({
       where: { id }
     });
+    revalidatePath('/admin', 'layout');
     revalidatePath('/admin/artikel');
     revalidatePath('/artikel');
     return { success: true };

@@ -62,6 +62,7 @@ export async function createLawyer(prevState: any, formData: FormData) {
     return { error: "Gagal menyimpan data advokat." };
   }
 
+  revalidatePath('/admin', 'layout');
   revalidatePath('/admin/advokat');
   revalidatePath('/pengacara');
   return { success: true };
@@ -123,6 +124,7 @@ export async function updateLawyer(id: number, prevState: any, formData: FormDat
     return { error: `Gagal memperbarui advokat: ${error.message}` };
   }
 
+  revalidatePath('/admin', 'layout');
   revalidatePath('/admin/advokat');
   revalidatePath('/pengacara');
   return { success: true };
@@ -138,6 +140,7 @@ export async function deleteLawyer(id: number) {
     await prisma.lawyer.delete({
       where: { id }
     });
+    revalidatePath('/admin', 'layout');
     revalidatePath('/admin/advokat');
     revalidatePath('/pengacara');
     return { success: true };
