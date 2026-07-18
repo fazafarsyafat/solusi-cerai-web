@@ -53,7 +53,7 @@ export async function createArticle(prevState: any, formData: FormData) {
 
   revalidatePath('/admin/artikel');
   revalidatePath('/artikel');
-  redirect('/admin/artikel');
+  return { success: true };
 }
 
 export async function updateArticle(id: number, prevState: any, formData: FormData) {
@@ -101,7 +101,7 @@ export async function updateArticle(id: number, prevState: any, formData: FormDa
 
   revalidatePath('/admin/artikel');
   revalidatePath('/artikel');
-  redirect('/admin/artikel');
+  return { success: true };
 }
 
 export async function deleteArticle(id: number) {
@@ -116,6 +116,7 @@ export async function deleteArticle(id: number) {
     });
     revalidatePath('/admin/artikel');
     revalidatePath('/artikel');
+    return { success: true };
   } catch (error) {
     return { error: "Gagal menghapus artikel." };
   }

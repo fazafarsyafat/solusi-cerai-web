@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { Plus, Edit, Trash2, Eye } from "lucide-react";
+import DeleteArticleButton from "./DeleteArticleButton";
 
 export default async function AdminArtikelPage() {
   const articles = await prisma.article.findMany({
@@ -61,15 +62,7 @@ export default async function AdminArtikelPage() {
                     <Link href={`/admin/artikel/${article.id}/edit`} className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
                       <Edit size={18} />
                     </Link>
-                    <form action={async () => {
-                      "use server";
-                      const { deleteArticle } = await import('./actions');
-                      await deleteArticle(article.id);
-                    }}>
-                      <button type="submit" className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Hapus Artikel">
-                        <Trash2 size={18} />
-                      </button>
-                    </form>
+                    <DeleteArticleButton id={article.id} />
                   </div>
                 </td>
               </tr>

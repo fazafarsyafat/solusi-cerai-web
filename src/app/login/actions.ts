@@ -39,8 +39,8 @@ export async function authenticate(prevState: any, formData: FormData) {
 
     await login({ id: user.id, email: user.email, name: user.name });
   } catch (error) {
-    return { error: "Terjadi kesalahan sistem." };
+    return { error: "Terjadi kesalahan internal" };
   }
 
-  redirect("/admin");
+  return { success: true };
 }

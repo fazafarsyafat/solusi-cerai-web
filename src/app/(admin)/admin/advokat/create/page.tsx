@@ -1,12 +1,24 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import { createLawyer } from "../actions";
 import Link from "next/link";
 import { ArrowLeft, Save } from "lucide-react";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export default function CreateLawyerPage() {
   const [state, formAction, isPending] = useActionState(createLawyer, undefined);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (state?.success) {
+      toast.success("Profil advokat berhasil disimpan!");
+      router.push("/admin/advokat");
+    } else if (state?.error) {
+      toast.error(state.error);
+    }
+  }, [state, router]);
 
   return (
     <div className="max-w-4xl mx-auto pb-12">

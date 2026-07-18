@@ -1,14 +1,26 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useState, useEffect } from "react";
 import { createArticle } from "../actions";
 import Editor from "@/components/Editor";
 import Link from "next/link";
 import { ArrowLeft, Save } from "lucide-react";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export default function CreateArticlePage() {
   const [state, formAction, isPending] = useActionState(createArticle, undefined);
   const [content, setContent] = useState("");
+  const router = useRouter();
+
+  useEffect(() => {
+    if (state?.success) {
+      toast.success("Artikel berhasil disimpan!");
+      router.push("/admin/artikel");
+    } else if (state?.error) {
+      toast.error(state.error);
+    }
+  }, [state, router]);
 
   return (
     <div className="max-w-4xl mx-auto pb-12">

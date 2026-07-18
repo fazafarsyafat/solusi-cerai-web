@@ -1,10 +1,12 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useState, useEffect } from "react";
 import { updateArticle } from "../../actions";
 import Editor from "@/components/Editor";
 import Link from "next/link";
 import { ArrowLeft, Save } from "lucide-react";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export default function EditArticleForm({ article }: { article: any }) {
   // Bind the article ID to the action
@@ -12,6 +14,16 @@ export default function EditArticleForm({ article }: { article: any }) {
   const [state, formAction, isPending] = useActionState(updateArticleWithId, undefined);
   
   const [content, setContent] = useState(article.content || "");
+  const router = useRouter();
+
+  useEffect(() => {
+    if (state?.success) {
+      toast.success("Artikel berhasil diperbarui!");
+      router.push("/admin/artikel");
+    } else if (state?.error) {
+      toast.error(state.error);
+    }
+  }, [state, router]);
 
   return (
     <div className="max-w-4xl mx-auto pb-12">

@@ -1,13 +1,25 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useState, useEffect } from "react";
 import { authenticate } from "./actions";
 import { Shield, Eye, EyeOff, Lock, Mail, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const [state, formAction, isPending] = useActionState(authenticate, undefined);
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (state?.success) {
+      toast.success("Berhasil masuk!");
+      router.push("/admin");
+    } else if (state?.error) {
+      toast.error(state.error);
+    }
+  }, [state, router]);
 
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center relative overflow-hidden p-4 md:p-8">

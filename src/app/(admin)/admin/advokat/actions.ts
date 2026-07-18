@@ -64,7 +64,7 @@ export async function createLawyer(prevState: any, formData: FormData) {
 
   revalidatePath('/admin/advokat');
   revalidatePath('/pengacara');
-  redirect('/admin/advokat');
+  return { success: true };
 }
 
 export async function updateLawyer(id: number, prevState: any, formData: FormData) {
@@ -125,7 +125,7 @@ export async function updateLawyer(id: number, prevState: any, formData: FormDat
 
   revalidatePath('/admin/advokat');
   revalidatePath('/pengacara');
-  redirect('/admin/advokat');
+  return { success: true };
 }
 
 export async function deleteLawyer(id: number) {
@@ -140,7 +140,8 @@ export async function deleteLawyer(id: number) {
     });
     revalidatePath('/admin/advokat');
     revalidatePath('/pengacara');
+    return { success: true };
   } catch (error) {
-    return { error: "Gagal menghapus data advokat." };
+    return { error: "Gagal menghapus advokat." };
   }
 }
