@@ -37,16 +37,7 @@ export async function createLawyer(prevState: any, formData: FormData) {
   if (photoFile && photoFile.size > 0) {
     const bytes = await photoFile.arrayBuffer();
     const buffer = Buffer.from(bytes);
-    const fileName = `advokat-${Date.now()}-${photoFile.name.replace(/[^a-zA-Z0-9.-]/g, '')}`;
-    const uploadDir = path.join(process.cwd(), 'public/uploads');
-    const filePath = path.join(uploadDir, fileName);
-    
-    try {
-      await writeFile(filePath, buffer);
-      photo = `/uploads/${fileName}`;
-    } catch (e) {
-      console.error("Failed to upload photo", e);
-    }
+    photo = `data:${photoFile.type || 'image/jpeg'};base64,${buffer.toString('base64')}`;
   }
 
   try {
@@ -105,16 +96,7 @@ export async function updateLawyer(id: number, prevState: any, formData: FormDat
   if (photoFile && photoFile.size > 0) {
     const bytes = await photoFile.arrayBuffer();
     const buffer = Buffer.from(bytes);
-    const fileName = `advokat-${Date.now()}-${photoFile.name.replace(/[^a-zA-Z0-9.-]/g, '')}`;
-    const uploadDir = path.join(process.cwd(), 'public/uploads');
-    const filePath = path.join(uploadDir, fileName);
-    
-    try {
-      await writeFile(filePath, buffer);
-      photo = `/uploads/${fileName}`;
-    } catch (e) {
-      console.error("Failed to upload photo", e);
-    }
+    photo = `data:${photoFile.type || 'image/jpeg'};base64,${buffer.toString('base64')}`;
   }
 
   try {

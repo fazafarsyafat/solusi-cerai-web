@@ -30,16 +30,7 @@ export async function createArticle(prevState: any, formData: FormData) {
   if (thumbnailFile && thumbnailFile.size > 0) {
     const bytes = await thumbnailFile.arrayBuffer();
     const buffer = Buffer.from(bytes);
-    const fileName = `${Date.now()}-${thumbnailFile.name.replace(/[^a-zA-Z0-9.-]/g, '')}`;
-    const uploadDir = path.join(process.cwd(), 'public/uploads');
-    const filePath = path.join(uploadDir, fileName);
-    
-    try {
-      await writeFile(filePath, buffer);
-      thumbnail = `/uploads/${fileName}`;
-    } catch (e) {
-      console.error("Failed to upload thumbnail", e);
-    }
+    thumbnail = `data:${thumbnailFile.type || 'image/jpeg'};base64,${buffer.toString('base64')}`;
   }
 
   try {
@@ -87,16 +78,7 @@ export async function updateArticle(id: number, prevState: any, formData: FormDa
   if (thumbnailFile && thumbnailFile.size > 0) {
     const bytes = await thumbnailFile.arrayBuffer();
     const buffer = Buffer.from(bytes);
-    const fileName = `${Date.now()}-${thumbnailFile.name.replace(/[^a-zA-Z0-9.-]/g, '')}`;
-    const uploadDir = path.join(process.cwd(), 'public/uploads');
-    const filePath = path.join(uploadDir, fileName);
-    
-    try {
-      await writeFile(filePath, buffer);
-      thumbnail = `/uploads/${fileName}`;
-    } catch (e) {
-      console.error("Failed to upload thumbnail", e);
-    }
+    thumbnail = `data:${thumbnailFile.type || 'image/jpeg'};base64,${buffer.toString('base64')}`;
   }
 
   try {
