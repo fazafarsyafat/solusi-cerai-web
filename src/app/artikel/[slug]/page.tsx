@@ -2,6 +2,8 @@ import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import ArtikelDetailClient from "./ArtikelDetailClient";
 
+export const dynamic = 'force-dynamic';
+
 export default async function ArtikelDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params;
   

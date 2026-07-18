@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import HomeClient from "./HomeClient";
 
+export const dynamic = 'force-dynamic';
+
 export default async function Page() {
   const articles = await prisma.article.findMany({
     where: { status: 'published' },
