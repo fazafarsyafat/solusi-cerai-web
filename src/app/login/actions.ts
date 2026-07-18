@@ -28,12 +28,12 @@ export async function authenticate(prevState: any, formData: FormData) {
           },
         });
       } else {
-        return { error: "Kredensial tidak valid." };
+        return { error: "Email tidak terdaftar di sistem kami." };
       }
     } else {
       const isValid = await bcrypt.compare(password, user.password);
       if (!isValid) {
-        return { error: "Kredensial tidak valid." };
+        return { error: "Password yang Anda masukkan salah." };
       }
     }
 
