@@ -342,7 +342,7 @@ export default function HomeClient({ articles, lawyers }: { articles: any[], law
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ delay: idx * 0.15, ...springTransition }}
-                whileHover={{ scale: 1.05, rotate: idx % 2 === 0 ? 2 : -2, y: -10 }}
+                whileHover={{ scale: 1.05, rotate: idx % 2 === 0 ? 2 : -2, y: -10, transition: { delay: 0, type: "spring", stiffness: 400, damping: 25 } }}
                 whileTap={{ scale: 0.95, rotate: 0 }}
                 className="group cursor-pointer bg-white rounded-[2.5rem] p-4 shadow-sm hover:shadow-[0_20px_50px_-12px_rgba(37,99,235,0.1)] transition-all duration-500 border border-slate-100 w-[280px] md:w-auto snap-center shrink-0 md:shrink"
                 onClick={() => window.location.href = '/pengacara'}
@@ -433,7 +433,7 @@ export default function HomeClient({ articles, lawyers }: { articles: any[], law
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.1, ...springTransition }}
-                  whileHover={{ scale: 1.03, rotate: idx % 2 === 0 ? -2 : 2, y: -10 }}
+                  whileHover={{ scale: 1.03, rotate: idx % 2 === 0 ? -2 : 2, y: -10, transition: { delay: 0, type: "spring", stiffness: 400, damping: 25 } }}
                   whileTap={{ scale: 0.97, rotate: 0 }}
                   className="group relative h-[350px] md:h-[400px] rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col justify-end"
                 >
