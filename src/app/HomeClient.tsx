@@ -32,22 +32,22 @@ const textRevealChild = {
 };
 
 const bentoHover1 = {
-  hover: { scale: 0.98, rotate: -1, transition: { type: "spring", stiffness: 400, damping: 25 } },
+  hover: { scale: 1.03, rotate: -2, y: -5, transition: { type: "spring", stiffness: 400, damping: 25 } },
   tap: { scale: 0.95, rotate: 0 }
 };
 
 const bentoHover2 = {
-  hover: { scale: 0.98, rotate: 1.5, transition: { type: "spring", stiffness: 400, damping: 25 } },
+  hover: { scale: 1.03, rotate: 2, y: -5, transition: { type: "spring", stiffness: 400, damping: 25 } },
   tap: { scale: 0.95, rotate: 0 }
 };
 
 const bentoHover3 = {
-  hover: { scale: 0.98, rotate: -2, transition: { type: "spring", stiffness: 400, damping: 25 } },
+  hover: { scale: 1.03, rotate: -3, y: -5, transition: { type: "spring", stiffness: 400, damping: 25 } },
   tap: { scale: 0.95, rotate: 0 }
 };
 
 const bentoHover4 = {
-  hover: { scale: 0.98, rotate: 2, transition: { type: "spring", stiffness: 400, damping: 25 } },
+  hover: { scale: 1.03, rotate: 3, y: -5, transition: { type: "spring", stiffness: 400, damping: 25 } },
   tap: { scale: 0.95, rotate: 0 }
 };
 
@@ -303,10 +303,15 @@ export default function HomeClient({ articles, lawyers }: { articles: any[], law
                 {/* Mobile Circle */}
                 <div className="md:hidden absolute left-0 top-0 -translate-x-[9px] mt-1 w-5 h-5 bg-primary border-4 border-blue-100 rounded-full z-10"></div>
                 
-                <div className="w-full md:w-[45%] bg-white p-8 md:p-10 rounded-[2.5rem] shadow-sm border border-slate-100 hover:shadow-[0_20px_40px_-15px_rgba(37,99,235,0.1)] transition-all duration-300">
+                <motion.div 
+                  whileHover={{ scale: 1.03, rotate: idx % 2 === 0 ? 2 : -2, y: -5 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                  className="w-full md:w-[45%] bg-white p-8 md:p-10 rounded-[2.5rem] shadow-sm border border-slate-100 hover:shadow-[0_20px_40px_-15px_rgba(37,99,235,0.1)] transition-shadow duration-300 cursor-pointer"
+                >
                   <h3 className="text-2xl font-extrabold text-slate-900 mb-4">{step.title}</h3>
                   <p className="text-slate-600 leading-relaxed text-lg">{step.desc}</p>
-                </div>
+                </motion.div>
                 <div className="hidden md:block w-[45%]"></div>
               </motion.div>
             ))}
@@ -337,6 +342,8 @@ export default function HomeClient({ articles, lawyers }: { articles: any[], law
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ delay: idx * 0.15, ...springTransition }}
+                whileHover={{ scale: 1.05, rotate: idx % 2 === 0 ? 2 : -2, y: -10 }}
+                whileTap={{ scale: 0.95, rotate: 0 }}
                 className="group cursor-pointer bg-white rounded-[2.5rem] p-4 shadow-sm hover:shadow-[0_20px_50px_-12px_rgba(37,99,235,0.1)] transition-all duration-500 border border-slate-100 w-[280px] md:w-auto snap-center shrink-0 md:shrink"
                 onClick={() => window.location.href = '/pengacara'}
               >
@@ -426,6 +433,8 @@ export default function HomeClient({ articles, lawyers }: { articles: any[], law
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.1, ...springTransition }}
+                  whileHover={{ scale: 1.03, rotate: idx % 2 === 0 ? -2 : 2, y: -10 }}
+                  whileTap={{ scale: 0.97, rotate: 0 }}
                   className="group relative h-[350px] md:h-[400px] rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col justify-end"
                 >
                   <div className="absolute inset-0 z-0">
