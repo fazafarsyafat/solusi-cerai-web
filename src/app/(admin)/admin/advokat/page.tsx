@@ -60,9 +60,15 @@ export default async function AdminAdvokatPage() {
                     <Link href={`/admin/advokat/${lawyer.id}/edit`} className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
                       <Edit size={18} />
                     </Link>
-                    <button className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-                      <Trash2 size={18} />
-                    </button>
+                    <form action={async () => {
+                      "use server";
+                      const { deleteLawyer } = await import('./actions');
+                      await deleteLawyer(lawyer.id);
+                    }}>
+                      <button type="submit" className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Hapus Advokat">
+                        <Trash2 size={18} />
+                      </button>
+                    </form>
                   </div>
                 </td>
               </tr>

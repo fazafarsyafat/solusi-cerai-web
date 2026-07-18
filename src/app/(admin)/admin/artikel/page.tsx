@@ -61,9 +61,15 @@ export default async function AdminArtikelPage() {
                     <Link href={`/admin/artikel/${article.id}/edit`} className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
                       <Edit size={18} />
                     </Link>
-                    <button className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-                      <Trash2 size={18} />
-                    </button>
+                    <form action={async () => {
+                      "use server";
+                      const { deleteArticle } = await import('./actions');
+                      await deleteArticle(article.id);
+                    }}>
+                      <button type="submit" className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Hapus Artikel">
+                        <Trash2 size={18} />
+                      </button>
+                    </form>
                   </div>
                 </td>
               </tr>
