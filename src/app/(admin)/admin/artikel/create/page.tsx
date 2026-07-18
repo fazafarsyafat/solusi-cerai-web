@@ -32,22 +32,36 @@ export default function CreateArticlePage() {
     const file = formData.get("thumbnail") as File;
     
     if (file && file.size > 0) {
+      // Batasi 10MB
+      if (file.size > 10 * 1024 * 1024) {
+        toast.error("Ukuran gambar maksimal 10 MB!");
+        setIsCompressing(false);
+        return;
+      }
+
       try {
         const options = {
           maxSizeMB: 0.5,
           maxWidthOrHeight: 1200,
-          useWebWorker: true,
+          useWebWorker: false,
         };
         const compressedFile = await imageCompression(file, options);
         formData.set("thumbnail", compressedFile, compressedFile.name || "thumbnail.jpg");
-      } catch (error) {
+      } catch (error: any) {
         console.error("Compression error:", error);
-        toast.error("Gagal memproses gambar");
+        toast.error("Gagal memproses gambar: " + (error?.message || "Unknown error"));
+        setIsCompressing(false);
+        return;
       }
     }
     
-    setIsCompressing(false);
-    formAction(formData);
+    // Add startTransition to ensure useActionState handles the manual call correctly
+    import("react").then(({ startTransition }) => {
+      startTransition(() => {
+        formAction(formData);
+        setIsCompressing(false);
+      });
+    });
   };
 
   return (

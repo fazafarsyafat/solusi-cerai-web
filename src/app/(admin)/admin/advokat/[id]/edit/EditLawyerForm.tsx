@@ -31,22 +31,34 @@ export default function EditLawyerForm({ lawyer }: { lawyer: any }) {
     const file = formData.get("photo") as File;
     
     if (file && file.size > 0) {
+      if (file.size > 10 * 1024 * 1024) {
+        toast.error("Ukuran foto maksimal 10 MB!");
+        setIsCompressing(false);
+        return;
+      }
+
       try {
         const options = {
           maxSizeMB: 0.5,
           maxWidthOrHeight: 1200,
-          useWebWorker: true,
+          useWebWorker: false,
         };
         const compressedFile = await imageCompression(file, options);
         formData.set("photo", compressedFile, compressedFile.name || "photo.jpg");
-      } catch (error) {
+      } catch (error: any) {
         console.error("Compression error:", error);
-        toast.error("Gagal memproses gambar");
+        toast.error("Gagal memproses gambar: " + (error?.message || "Unknown error"));
+        setIsCompressing(false);
+        return;
       }
     }
     
-    setIsCompressing(false);
-    formAction(formData);
+    import("react").then(({ startTransition }) => {
+      startTransition(() => {
+        formAction(formData);
+        setIsCompressing(false);
+      });
+    });
   };
 
   return (
